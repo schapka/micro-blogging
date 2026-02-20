@@ -19,6 +19,7 @@ function getEnv(): Env {
       `Invalid environment configuration: ${prettifyError(parseResult.error)}`,
     );
   }
+  console.log("Env:", JSON.stringify(parseResult.data, null, 2));
   return parseResult.data;
 }
 

@@ -12,12 +12,14 @@ const envSchema = z.object({
 type Env = z.infer<typeof envSchema>;
 
 function getEnv(): Env {
+  console.log("API_BASE_URL", processEnv.API_BASE_URL);
   const parseResult = envSchema.safeParse(processEnv);
   if (!parseResult.success) {
     throw new Error(
       `Invalid environment configuration: ${prettifyError(parseResult.error)}`,
     );
   }
+  console.log("Env:", JSON.stringify(parseResult.data, null, 2));
   return parseResult.data;
 }
 
