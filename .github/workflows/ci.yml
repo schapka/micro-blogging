@@ -143,3 +143,19 @@ jobs:
           labels: ${{ steps.meta-web-app.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy
+    needs: build-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Railway
+        run: npm i -g @railway/cli
+
+      - name: Deploy
+        run: |
+          railway redeploy --service micro-blogging-backend --yes
+          railway redeploy --service micro-blogging-web-app --yes
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_NO_TELEMETRY: 1
