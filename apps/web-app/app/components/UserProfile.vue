@@ -46,7 +46,10 @@ const { data: userPosts } = useUserPosts(username);
           class="block mt-3 text-xs text-stone-400"
           :datetime="post.createdAt"
         >
-          {{ formatDate(post.createdAt) }}
+          <!-- Avoid hydration mismatch: date formatting uses the system timezone, which differs between server (US) and client (user's local). -->
+          <ClientOnly>
+            {{ formatDate(post.createdAt) }}
+          </ClientOnly>
         </time>
       </article>
       <!-- /PostCard -->

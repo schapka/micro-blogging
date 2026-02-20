@@ -44,13 +44,13 @@ watch(open, (isOpen) => {
 
 <template>
   <!-- UI generated via v0.dev, see: https://v0.app/chat/minimal-profile-page-fY85mhQCcYR -->
-  <dialog
+  <div
     class="fixed inset-0 z-50 w-auto h-auto flex items-center justify-center pointer-events-none invisible open:visible open:pointer-events-auto"
+    role="dialog"
     aria-modal="true"
     aria-label="Create a new post"
     :open="open"
   >
-    >
     <!-- Backdrop -->
     <div class="absolute inset-0 bg-black/40" @click="handleClose"></div>
 
@@ -103,5 +103,5 @@ watch(open, (isOpen) => {
         </button>
       </div>
     </div>
-  </dialog>
+  </div>
 </template>
