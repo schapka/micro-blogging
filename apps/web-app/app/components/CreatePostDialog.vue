@@ -44,19 +44,15 @@ watch(open, (isOpen) => {
 
 <template>
   <!-- UI generated via v0.dev, see: https://v0.app/chat/minimal-profile-page-fY85mhQCcYR -->
-  <div
-    class="fixed inset-0 z-50 w-auto h-auto flex items-center justify-center pointer-events-none invisible open:visible open:pointer-events-auto"
-    role="dialog"
+  <dialog
+    class="fixed inset-0 z-50 w-auto h-auto flex items-center justify-center bg-transparent backdrop-brightness-50 backdrop-blur-xs pointer-events-none invisible open:visible open:pointer-events-auto"
     aria-modal="true"
     aria-label="Create a new post"
     :open="open"
   >
-    <!-- Backdrop -->
-    <div class="absolute inset-0 bg-black/40" @click="handleClose"></div>
-
     <!-- Panel -->
     <div
-      class="relative mx-4 w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6"
+      class="relative mx-4 w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 border-red-300"
     >
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-base font-semibold">New post</h2>
@@ -103,5 +99,5 @@ watch(open, (isOpen) => {
         </button>
       </div>
     </div>
-  </div>
+  </dialog>
 </template>
