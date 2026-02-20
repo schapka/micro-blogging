@@ -19,6 +19,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vue-tsc": "catalog:"
   }

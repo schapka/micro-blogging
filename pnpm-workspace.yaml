@@ -4,6 +4,7 @@ packages:
 
 catalog:
   '@hono/node-server': 1.19.9
+  '@tailwindcss/vite': 4.2.0
   '@types/better-sqlite3': 7.6.13
   '@types/node': 25.3.0
   better-sqlite3: 12.6.2
@@ -11,6 +12,7 @@ catalog:
   drizzle-orm: 0.45.1
   hono: 4.11.10
   nuxt: 4.3.1
+  tailwindcss: 4.2.0
   tsx: 4.21.0
   typescript: 5.9.3
   vue: 3.5.28
@@ -33,3 +35,7 @@ onlyBuiltDependencies:
 
 syncInjectedDepsAfterScripts:
   - build
+
+# Required for Nitro's server-externalized packages (e.g. unhead) to resolve their
+# transitive deps (e.g. hookable) at runtime in the Docker deployment.
+shamefullyHoist: true

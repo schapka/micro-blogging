@@ -25,6 +25,15 @@ pnpm dev
 
 Web App: `http://localhost:3000` · Backend: `http://localhost:3001`
 
+## Profiles
+
+Authentication is statically mocked — the logged-in user is always **starloam**.
+
+| URL                                       | User     | Role                                                  |
+| ----------------------------------------- | -------- | ----------------------------------------------------- |
+| `http://localhost:3000/profiles/me`       | starloam | Logged-in user — can create posts (to be implemented) |
+| `http://localhost:3000/profiles/nullvoid` | nullvoid | Another user — read-only view                         |
+
 **Docker Compose**
 
 ```sh
