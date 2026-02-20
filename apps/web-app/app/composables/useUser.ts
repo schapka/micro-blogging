@@ -1,6 +1,5 @@
 export function useUser(username: MaybeRef<string>) {
-  const url = computed(() => `/api/users/${unref(username)}`);
-  return useFetch(url, {
+  return useFetch(() => `/api/users/${unref(username)}`, {
     transform: ({ data }: UserResponse) => data,
   });
 }

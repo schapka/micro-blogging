@@ -1,7 +1,13 @@
 import { Hono, type Context } from "hono";
+import { desc, eq, getTableColumns } from "drizzle-orm";
+import { validator } from "hono/validator";
+import { treeifyError, z } from "zod/v4";
 import { postsTable, usersTable } from "./db/schema.ts";
 import { db } from "./db/db.ts";
-import { eq, getTableColumns } from "drizzle-orm";
+
+const createPostSchema = z.object({
+  content: z.string().trim().min(1).max(280),
+});
 
 export const users = new Hono();
 
@@ -27,6 +33,28 @@ users.get("/me/posts", async (c) => {
   const posts = await findPostsByUsername(currentUsername);
   return c.json({ data: posts });
 });
+
+users.post(
+  "/me/posts",
+  validator("json", (value, c) => {
+    const parseResult = createPostSchema.safeParse(value);
+    if (!parseResult.success) {
+      return c.json(
+        {
+          error: "Bad request",
+          errorFields: treeifyError(parseResult.error),
+        },
+        400,
+      );
+    }
+    return parseResult.data;
+  }),
+  async (c) => {
+    const { content } = c.req.valid("json");
+    const post = await createPost(content);
+    return c.json({ data: post });
+  },
+);
 
 users.get("/:username", async (c) => {
   const username = c.req.param("username");
@@ -56,8 +84,24 @@ async function findPostsByUsername(username: string) {
   return db
     .select(getTableColumns(postsTable))
     .from(postsTable)
-    .fullJoin(usersTable, eq(postsTable.userId, usersTable.id))
+    .orderBy(desc(postsTable.createdAt))
+    .leftJoin(usersTable, eq(postsTable.userId, usersTable.id))
     .where(eq(usersTable.username, username));
+}
+
+async function createPost(content: string) {
+  const user = await findUserByUsername(currentUsername);
+
+  if (!user) {
+    throw new Error(`User not found: ${currentUsername}`);
+  }
+
+  const [post] = await db
+    .insert(postsTable)
+    .values({ userId: user.id, content })
+    .returning(getTableColumns(postsTable));
+
+  return post;
 }
 
 function createNotFound(c: Context, error = "not found") {
