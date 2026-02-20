@@ -1,0 +1,28 @@
+packages:
+  - apps/*
+  - packages/*
+
+catalog:
+  '@hono/node-server': 1.19.9
+  '@types/node': 25.3.0
+  hono: 4.11.10
+  nuxt: 4.3.1
+  tsx: 4.21.0
+  typescript: 5.9.3
+  vue: 3.5.28
+  vue-router: 5.0.2
+  vue-tsc: 3.2.4
+  zod: 4.3.6
+
+catalogMode: prefer
+
+cleanupUnusedCatalogs: true
+
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+
+injectWorkspacePackages: true
+
+syncInjectedDepsAfterScripts:
+  - build

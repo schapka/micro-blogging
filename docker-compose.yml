@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: .
+      target: backend
+    ports:
+      - 3001:3001
+    environment:
+      PORT: 3001
+
+  web-app:
+    build:
+      context: .
+      target: web-app
+    ports:
+      - 3000:3000
+    environment:
+      PORT: 3000
+      API_BASE_URL: http://backend:3001

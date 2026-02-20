@@ -1,0 +1,25 @@
+{
+  "name": "@repo/web-app",
+  "type": "module",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "start": "node dist/server/index.mjs"
+  },
+  "dependencies": {
+    "nuxt": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:"
+  }
+}
