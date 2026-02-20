@@ -3,21 +3,29 @@
   "type": "module",
   "private": true,
   "files": [
-    "dist"
+    "dist",
+    "drizzle"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
     "dev": "tsx watch src/main.ts",
     "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:ui": "drizzle-kit studio"
   },
   "dependencies": {
     "@hono/node-server": "catalog:",
+    "better-sqlite3": "catalog:",
+    "drizzle-orm": "catalog:",
     "hono": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "catalog:",
     "@types/node": "catalog:",
+    "drizzle-kit": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:"
   }

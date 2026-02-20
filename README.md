@@ -47,9 +47,10 @@ Frontend: `http://localhost:3000`
 
 ### Backend
 
-| Variable | Default | Description             |
-| -------- | ------- | ----------------------- |
-| `PORT`   | `3001`  | Port the API listens on |
+| Variable       | Default     | Description               |
+| -------------- | ----------- | ------------------------- |
+| `PORT`         | `3001`      | Port the API listens on   |
+| `DATABASE_URL` | `sqlite.db` | SQLite database file path |
 
 ### Web-App
 
@@ -57,9 +58,24 @@ Frontend: `http://localhost:3000`
 | -------------- | ----------------------- | --------------------------- |
 | `API_BASE_URL` | `http://localhost:3001` | Base URL of the backend API |
 
+## Database
+
+The backend uses [SQLite](https://sqlite.org) via [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) — no external database service required. Data is persisted to a file on a named Docker volume.
+
+Migrations are plain SQL files generated locally via [Drizzle Kit](https://orm.drizzle.team/docs/kit-overview) and applied automatically at startup.
+
+**After changing the schema, regenerate migrations:**
+
+```sh
+pnpm --filter @repo/backend db:generate
+```
+
+Commit the generated files — they are baked into the Docker image and applied at startup.
+
 ## Technologies
 
 - **[Nuxt.js](https://nuxt.com)** — frontend (Node server mode)
 - **[Hono](https://hono.dev)** — backend API
+- **[Drizzle ORM](https://orm.drizzle.team)** — schema definition and migrations
 - **pnpm workspaces** — monorepo tooling
 - **Docker Compose** — containerised deployment
