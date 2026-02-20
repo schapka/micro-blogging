@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { env } from "./env.ts";
-import { db, prepareDatabase } from "./db/db.ts";
-import { usersTable } from "./db/schema.ts";
+import { prepareDatabase } from "./db/db.ts";
+import { users } from "./users.ts";
 
 const app = new Hono();
 
@@ -10,20 +10,7 @@ app.get("/health", (c) => {
   return c.json({ ok: true });
 });
 
-/**
- * Temporary endpoint for development
- */
-app.get("/api/test", (c) => {
-  return c.json({ ok: true });
-});
-
-/**
- * Temporary endpoint for development
- */
-app.get("/api/users", async (c) => {
-  const users = await db.select().from(usersTable);
-  return c.json({ data: users });
-});
+app.route("/api/users", users);
 
 async function bootstrap() {
   await prepareDatabase();
